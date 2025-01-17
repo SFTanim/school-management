@@ -1,8 +1,10 @@
+import PageTitle from "./PageTitle";
 
 const Home = () => {
     return (
         <div>
-            <h2 className="">home</h2>
+            <PageTitle heading={"Dashboard"} />
+
         </div>
     );
 };
