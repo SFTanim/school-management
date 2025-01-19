@@ -4,16 +4,13 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import Face6Icon from '@mui/icons-material/Face6';
 import PersonIcon from '@mui/icons-material/Person';
-
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
@@ -24,21 +21,19 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { Logout, PersonAdd, Settings } from '@mui/icons-material';
+import { Avatar, Tooltip } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
 
 export default function Navbar() {
     const { user, userLogout } = useAuth()
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
     const navigate = useNavigate()
 
 
     // Right Menu
-    const handleMenu2 = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl2(event.currentTarget);
-    };
+
 
     const handleClose = (value: string) => {
-        setAnchorEl(null);
         if (value) {
             if (value === "dashboard") {
                 navigate("/")
@@ -49,20 +44,27 @@ export default function Navbar() {
             if (value === "teachers") {
                 navigate('/teachers')
             }
-        }
-    };
-
-    const handleClose2 = (value: string) => {
-        setAnchorEl2(null);
-        console.log(value);
-        if (value === "logout") {
-            if (userLogout) {
-                userLogout().then(() => {
-                    navigate("/signin");
-                });
+            if (value === "logout") {
+                if (userLogout) {
+                    userLogout().then(() => {
+                        navigate("/signin");
+                    });
+                }
             }
         }
     };
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const handleCloseAccSettings = () => {
+        setAnchorEl(null);
+
+    };
+    const openAccSettings = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+
 
 
     const [open, setOpen] = React.useState(false);
@@ -122,6 +124,7 @@ export default function Navbar() {
             <AppBar position="static">
                 <Toolbar>
 
+                    {/* Dashboard Menu */}
                     <Button className='text-left' onClick={toggleDrawer(true)}>
                         <MenuIcon className='text-white' />
                     </Button>
@@ -129,37 +132,92 @@ export default function Navbar() {
                         {DrawerList}
                     </Drawer>
 
+                    {/* School Name */}
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         School
                     </Typography>
+
+                    {/* Account Settings */}
                     {user && (
                         <div>
-                            <IconButton
-                                size="large"
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar2"
-                                aria-haspopup="true"
-                                onClick={handleMenu2}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
+                            <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+                                {/* <Typography sx={{ minWidth: 100 }}>Contact</Typography> */}
+                                {/* <Typography sx={{ minWidth: 100 }}>Profile</Typography> */}
+                                <Tooltip title="Account settings">
+                                    <IconButton
+                                        onClick={handleClick}
+                                        size="small"
+                                        sx={{ ml: 2 }}
+                                        aria-controls={openAccSettings ? 'account-menu' : undefined}
+                                        aria-haspopup="true"
+                                        aria-expanded={open ? 'true' : undefined}
+                                    >
+                                        <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+                                    </IconButton>
+                                </Tooltip>
+                            </Box>
                             <Menu
-                                id="menu-appbar2"
-                                anchorEl={anchorEl2}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
+                                anchorEl={anchorEl}
+                                id="account-menu"
+                                open={openAccSettings}
+                                onClose={handleCloseAccSettings}
+                                onClick={handleCloseAccSettings}
+                                slotProps={{
+                                    paper: {
+                                        elevation: 0,
+                                        sx: {
+                                            overflow: 'visible',
+                                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                            mt: 1.5,
+                                            '& .MuiAvatar-root': {
+                                                width: 32,
+                                                height: 32,
+                                                ml: -0.5,
+                                                mr: 1,
+                                            },
+                                            '&::before': {
+                                                content: '""',
+                                                display: 'block',
+                                                position: 'absolute',
+                                                top: 0,
+                                                right: 14,
+                                                width: 10,
+                                                height: 10,
+                                                bgcolor: 'background.paper',
+                                                transform: 'translateY(-50%) rotate(45deg)',
+                                                zIndex: 0,
+                                            },
+                                        },
+                                    },
                                 }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorEl2)}
-                                onClose={handleClose2}
+                                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                             >
-                                <MenuItem onClick={() => handleClose2("logout")}>Logout</MenuItem>
+                                <MenuItem onClick={() => handleClose("")}>
+                                    <Avatar /> Profile
+                                </MenuItem>
+                                <MenuItem onClick={() => handleClose("")}>
+                                    <Avatar /> My account
+                                </MenuItem>
+                                <Divider />
+                                <MenuItem onClick={() => handleClose("")}>
+                                    <ListItemIcon>
+                                        <PersonAdd fontSize="small" />
+                                    </ListItemIcon>
+                                    Add another account
+                                </MenuItem>
+                                <MenuItem onClick={() => handleClose("")}>
+                                    <ListItemIcon>
+                                        <Settings fontSize="small" />
+                                    </ListItemIcon>
+                                    Settings
+                                </MenuItem>
+                                <MenuItem onClick={() => handleClose("logout")}>
+                                    <ListItemIcon>
+                                        <Logout fontSize="small" />
+                                    </ListItemIcon>
+                                    Logout
+                                </MenuItem>
                             </Menu>
                         </div>
                     )}
