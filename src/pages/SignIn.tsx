@@ -164,6 +164,7 @@ export default function SignIn() {
                                 id="email"
                                 type="email"
                                 name="email"
+                                value={"sfttanim@gmail.com"}
                                 placeholder="your@email.com"
                                 autoComplete="email"
                                 autoFocus
@@ -182,6 +183,7 @@ export default function SignIn() {
                                 placeholder="••••••"
                                 type="password"
                                 id="password"
+                                value={"Aa1111"}
                                 autoComplete="current-password"
                                 autoFocus
                                 required

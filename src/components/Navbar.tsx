@@ -10,6 +10,20 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
+import WidgetsIcon from '@mui/icons-material/Widgets';
+import Face6Icon from '@mui/icons-material/Face6';
+import PersonIcon from '@mui/icons-material/Person';
+
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
 
 export default function Navbar() {
     const { user, userLogout } = useAuth()
@@ -17,11 +31,6 @@ export default function Navbar() {
     const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
     const navigate = useNavigate()
 
-
-    // Left Menu
-    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
 
     // Right Menu
     const handleMenu2 = (event: React.MouseEvent<HTMLElement>) => {
@@ -55,39 +64,71 @@ export default function Navbar() {
         }
     };
 
+
+    const [open, setOpen] = React.useState(false);
+
+    const toggleDrawer = (newOpen: boolean) => () => {
+        setOpen(newOpen);
+    };
+
+    const DrawerList = (
+        <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+            <List>
+                <ListItem key={'dashboard'} disablePadding onClick={() => handleClose("dashboard")}>
+                    <ListItemButton>
+                        <ListItemIcon className='text-black'>
+                            <WidgetsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={'Dashboard'} />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key={'dashboard'} disablePadding onClick={() => handleClose("students")}>
+                    <ListItemButton>
+                        <ListItemIcon className='text-black'>
+                            <Face6Icon />
+                        </ListItemIcon>
+                        <ListItemText primary={'Students'} />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key={'dashboard'} disablePadding onClick={() => handleClose("teachers")}>
+                    <ListItemButton>
+                        <ListItemIcon className='text-black'>
+                            <PersonIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={'Teachers'} />
+                    </ListItemButton>
+                </ListItem>
+
+            </List>
+            <Divider />
+            <List>
+                {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                    <ListItem key={text} disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+            </List>
+        </Box>
+    );
+
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                        onClick={handleMenu}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Menu
-                        id="menu-appbar"
-                        anchorEl={anchorEl}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                    >
-                        <MenuItem onClick={() => handleClose("profile")}>Dashboard</MenuItem>
-                        <MenuItem onClick={() => handleClose("students")}>Students</MenuItem>
-                        <MenuItem onClick={() => handleClose("teachers")}>Teachers</MenuItem>
-                    </Menu>
+
+                    <Button className='text-left' onClick={toggleDrawer(true)}>
+                        <MenuIcon className='text-white' />
+                    </Button>
+                    <Drawer open={open} onClose={toggleDrawer(false)}>
+                        {DrawerList}
+                    </Drawer>
+
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         School
                     </Typography>
@@ -127,3 +168,7 @@ export default function Navbar() {
         </Box>
     );
 }
+
+
+
+
