@@ -29,5 +29,5 @@ export const AuthContext = createContext<ProvidersType>({
     setLoading: undefined,
     userLogout: undefined,
     darkTheme: false,
-    setDarkTheme: undefined
+    setDarkTheme: () => {}, 
 })
