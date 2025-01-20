@@ -1,8 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+.font-general {
+  font-family: "Montserrat", serif;
+}
+
+.navbar-bg-color {
+  background-color: var(--navbar-bg-color);
+}
+
+:root {
+  --navbar-bg-color: #4635b1;
+}
+
+[dark-theme="dark"] {
+  --navbar-bg-color: #1b1b2f;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.font-general {
-    font-family: "Montserrat", serif;
-}

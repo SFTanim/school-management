@@ -7,5 +7,8 @@ const Teachers = () => {
         </div>
     );
 };
-
+/**
+ * Teachers list
+ * Teachers Present List
+ * Teachers Off days*/ 
 export default Teachers;

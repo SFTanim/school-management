@@ -122,8 +122,7 @@ export default function Navbar() {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
-                <Toolbar>
-
+                <Toolbar className='navbar-bg-color'>
                     {/* Dashboard Menu */}
                     <Button className='text-left' onClick={toggleDrawer(true)}>
                         <MenuIcon className='text-white' />

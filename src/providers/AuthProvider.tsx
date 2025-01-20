@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth";
 import auth from "../components/firebase/firebase.config";
 import { ToastContainer, toast } from 'react-toastify';
+import useLocalStorage from 'use-local-storage';
 
 interface AuthProviderProps {
     children: ReactNode
@@ -16,7 +17,8 @@ type Pass = string
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
     const [user, setUser] = useState<User | null>();
-    const [loading, setLoading] = useState<boolean>(true)
+    const [loading, setLoading] = useState<boolean>(true);
+    const [darkTheme, setDarkTheme] = useLocalStorage("dark-theme", false)
     const name: string = 'tanim';
 
     const newUserSignUp = (email: Email, password: Pass): Promise<UserCredential> => {
@@ -80,7 +82,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         newUserSignUp,
         warningMessage,
         successMessage,
-        userLogout
+        userLogout,darkTheme, setDarkTheme
     }
     return (
         <AuthContext.Provider value={allFn}>

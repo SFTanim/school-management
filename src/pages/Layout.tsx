@@ -1,10 +1,10 @@
 
 import { Outlet } from 'react-router';
-import Navbar from './../components/Navbar';
+import Navbar from '../components/Navbar';
 
-const Dashboard: React.FC = () => {
+const Layout: React.FC = () => {
     return (
-        <div className='font-general'>
+        <div className=''>
             <Navbar />
             <div className="container mx-auto mt-4">
                 <Outlet />
@@ -13,4 +13,4 @@ const Dashboard: React.FC = () => {
     );
 };
 
-export default Dashboard;
+export default Layout;

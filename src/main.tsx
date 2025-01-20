@@ -1,11 +1,11 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router";
 import "./index.css";
-import Dashboard from "./pages/Dashboard.tsx";
+import Layout from "./pages/Layout.tsx";
 import StudentsList from "./pages/StudentsList.tsx";
 import Teachers from "./pages/Teachers.tsx";
 import AuthProvider from "./providers/AuthProvider.tsx";
-import Home from "./components/Home.tsx";
+import AdminDashboard from "./components/adminDashboard/AdminDashboard.tsx";
 import PrivateRoutes from "./routers/PrivateRoutes.tsx";
 import SignIn from "./pages/SignIn.tsx";
 
@@ -21,8 +21,8 @@ ReactDOM.createRoot(root).render(
       <Routes>
         <Route path="/signin" element={<SignIn />} />
         <Route element={<PrivateRoutes />}>
-          <Route path="/" element={<Dashboard />}>
-            <Route index element={<Home />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<AdminDashboard />} />
             <Route path="students" element={<StudentsList />} />
             <Route path="teachers" element={<Teachers />} />
           </Route>

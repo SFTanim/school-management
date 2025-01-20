@@ -11,7 +11,10 @@ interface ProvidersType {
     setUser?: (user: User | null) => void;
     loading?: boolean;
     setLoading?: (loading: boolean) => void;
-    userLogout?:() => Promise<void>
+    userLogout?: () => Promise<void>,
+    darkTheme?: boolean,
+    setDarkTheme: (darkTheme: boolean) => void
+
 }
 
 export const AuthContext = createContext<ProvidersType>({
@@ -21,8 +24,10 @@ export const AuthContext = createContext<ProvidersType>({
     warningMessage: undefined,
     successMessage: undefined,
     user: null,
-    setUser: undefined, 
-    loading: true, 
-    setLoading: undefined, 
-    userLogout:undefined
+    setUser: undefined,
+    loading: true,
+    setLoading: undefined,
+    userLogout: undefined,
+    darkTheme: false,
+    setDarkTheme: undefined
 })
